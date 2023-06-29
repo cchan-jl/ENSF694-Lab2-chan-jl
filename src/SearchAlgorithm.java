@@ -13,7 +13,7 @@ public class SearchAlgorithm {
 	}
 	
 	public static int linearSearchImproved(int[] array, int key) {
-	// method halves the number of loop iterations by checking two elements at once, thus improving running time
+	// method halves the number of loop iterations by checking two elements at once, thus improving running time 
 		for(int i = 0; i < array.length; i += 2) {
 			if(array[i] == key) {
 				return i;
