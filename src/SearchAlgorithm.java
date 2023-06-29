@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Arrays;
-import java.lang.*;
 
 public class SearchAlgorithm {
 	
@@ -14,16 +13,17 @@ public class SearchAlgorithm {
 	}
 	
 	public static int linearSearchImproved(int[] array, int key) {
-		int endOfArray = array.length - 1;
-		for(int i = 0; i < array.length; i ++) {
+	// method halves the number of loop iterations by checking two elements at once, thus improving running time
+		for(int i = 0; i < array.length; i += 2) {
 			if(array[i] == key) {
 				return i;
-			}	
-			
-			if(array[endOfArray] == key) {
-				return endOfArray;
 			}
-			endOfArray -= 1;
+			
+			if(i + 1 < array.length && array[i + 1] == key) {
+				if(array[i + 1] == key) {
+					return i + 1;
+				}
+			}
 		}
 		return -1;
 	}
@@ -48,7 +48,6 @@ public class SearchAlgorithm {
 	
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Enter the number of elements in the array: ");
 		int arrayElements = reader.nextInt();
@@ -65,6 +64,7 @@ public class SearchAlgorithm {
 		long startTimeLinear = System.nanoTime();
 		int linearIndex = linearSearch(array, searchKey);
 		long endTimeLinear = System.nanoTime();
+		System.out.println("\nLinear Search:");
 		if(linearIndex == -1) {
 			System.out.println("Search key NOT FOUND");
 		} else {
@@ -76,6 +76,7 @@ public class SearchAlgorithm {
 		long startTimeInterpolation = System.nanoTime();
 		int interpolationIndex = interpolationSearch(array, searchKey);
 		long endTimeInterpolation = System.nanoTime();
+		System.out.println("\nInterpolation Search:");
 		if(interpolationIndex == -1) {
 			System.out.println("Search key NOT FOUND");
 		} else {
@@ -87,15 +88,18 @@ public class SearchAlgorithm {
 		long startTimeImproved = System.nanoTime();
 		int linearIndexImproved = linearSearchImproved(array, searchKey);
 		long endTimeImproved = System.nanoTime();
+		System.out.println("\nImproved Linear Search:");
 		if(linearIndexImproved == -1) {
 			System.out.println("Search key NOT FOUND");
 		} else {
-			System.out.println("Search key FOUND at index improved " + linearIndexImproved);
+			System.out.println("Search key FOUND at index " + linearIndexImproved);
 		}
 		long linearTimeImproved = endTimeImproved - startTimeImproved;
 		System.out.println("Improved time in nanoseconds = " + linearTimeImproved);
+		
+		reader.close();
 	}
 
-// For the assignment sample input, the linear search was faster than the inpterpolation search
+// For the assignment sample input, the linear search was faster than the interpolation search
 // since the sample input had a small amount of data and the array for interpolation had to be sorted beforehand which adds time.
 }
